@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -54,9 +51,10 @@ public class ShipmentTaskController {
      * API call to manually start an enabled task by trackingId and name.
      *
      */
-    @RequestMapping(value = "/enabled/start/taskId", method = RequestMethod.POST)
-    public ResponseEntity<?> manuallyStartEnabledTask(@Valid @RequestBody ShipmentTaskResource shipmentTaskResource) {
-        shipmentTaskBoundaryService.manuallyStartEnabledTask(shipmentTaskResource.trackingId, shipmentTaskResource.name);
+    @RequestMapping(value = "/enabled/start/{trackingId}/{name}", method = RequestMethod.POST)
+    public ResponseEntity<?> manuallyStartEnabledTask(@PathVariable("trackingId") String trackingId, @PathVariable("name") String name,
+                                                      @Valid @RequestBody ShipmentTaskResource shipmentTaskResource) {
+        shipmentTaskBoundaryService.manuallyStartEnabledTask(trackingId, name);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
