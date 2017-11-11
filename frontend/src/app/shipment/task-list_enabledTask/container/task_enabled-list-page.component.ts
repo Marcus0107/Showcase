@@ -34,7 +34,7 @@ export class EnabledTaskListPageComponent implements OnInit, OnDestroy {
     public ngOnInit() {
         this._store.dispatch(new RequestEnabledTasksAction());
     }
-D
+
     public ngOnDestroy() {
         this._store.dispatch(new InitializeEnabledTaskListAction());
         this.enabledTaskListSliceSubscription.unsubscribe();
@@ -45,7 +45,7 @@ D
     // ***************************************************
 
     public onTaskSelectedEvent(trackingId: string) {
-        // todo: Add new service
+      this._router.navigate(["/shipments/edit/" + trackingId]);
     }
 
     // ***************************************************
