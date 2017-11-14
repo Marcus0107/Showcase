@@ -1,19 +1,20 @@
 import {NgModule, ModuleWithProviders} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {
-    AutoCompleteModule,
-    BlockUIModule,
-    ButtonModule,
-    CheckboxModule,
-    RadioButtonModule,
-    DataTableModule,
-    DialogModule,
-    DropdownModule,
-    InputTextModule,
-    InputTextareaModule,
-    MenubarModule,
-    PanelModule,
-    TabViewModule,
+  AutoCompleteModule,
+  BlockUIModule,
+  ButtonModule,
+  CheckboxModule,
+  RadioButtonModule,
+  DataTableModule,
+  DialogModule,
+  DropdownModule,
+  InputTextModule,
+  InputTextareaModule,
+  MenubarModule,
+  PanelModule,
+  TabViewModule,
+  ConfirmDialogModule
 } from "primeng/primeng";
 
 @NgModule({
@@ -31,7 +32,8 @@ import {
         InputTextareaModule,
         MenubarModule,
         PanelModule,
-        TabViewModule
+        TabViewModule,
+        ConfirmDialogModule
     ]
 })
 export class UIModule {

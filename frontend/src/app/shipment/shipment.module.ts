@@ -4,6 +4,7 @@ import {ShipmentListModule} from "./shipment-list/shipment-list.module";
 import {TaskListModule} from "./task-list/task-list.module";
 import {EnabledTaskListModule} from "./task-list_enabledTask/task_enabled-list.module";
 import {ShipmentCommonModule} from "./shipment-common/shipment-common.module";
+import {ConfirmationService} from "primeng/primeng";
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import {ShipmentCommonModule} from "./shipment-common/shipment-common.module";
       ShipmentListModule,
       TaskListModule,
       EnabledTaskListModule
-    ]
+    ],
+    providers: [ConfirmationService]
 })
 export class ShipmentModule {
 }

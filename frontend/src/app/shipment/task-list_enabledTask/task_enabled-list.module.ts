@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {SharedModule} from "../../shared/shared.module";
 import {EnabledTaskListPageComponent} from "./container/task_enabled-list-page.component";
 import {EnabledTaskListComponent} from "./presentationals/task_enabled-list.component";
+import {ConfirmationService} from "primeng/primeng";
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {EnabledTaskListComponent} from "./presentationals/task_enabled-list.comp
   ],
   exports: [
     EnabledTaskListPageComponent
-  ]
+  ],
+  providers: [ConfirmationService]
 })
 export class EnabledTaskListModule {
 }
