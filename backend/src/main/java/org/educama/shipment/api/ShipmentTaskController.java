@@ -51,10 +51,9 @@ public class ShipmentTaskController {
      * API call to manually start an enabled task by trackingId and name.
      *
      */
-    @RequestMapping(value = "/enabled/start/{trackingId}/{name}", method = RequestMethod.POST)
-    public ResponseEntity<?> manuallyStartEnabledTask(@PathVariable("trackingId") String trackingId, @PathVariable("name") String name,
-                                                      @Valid @RequestBody ShipmentTaskResource shipmentTaskResource) {
-        shipmentTaskBoundaryService.manuallyStartEnabledTask(trackingId, name);
+    @RequestMapping(value = "/enabled/start", method = RequestMethod.POST)
+    public ResponseEntity<?> manuallyStartEnabledTask(@Valid @RequestBody ShipmentTaskResource shipmentTaskResource) {
+        shipmentTaskBoundaryService.manuallyStartEnabledTask(shipmentTaskResource.trackingId, shipmentTaskResource.name);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
