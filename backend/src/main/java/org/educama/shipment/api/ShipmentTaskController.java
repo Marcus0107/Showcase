@@ -1,5 +1,7 @@
 package org.educama.shipment.api;
 
+import org.educama.shipment.api.datastructure.EnabledTaskDS;
+import org.educama.shipment.api.resource.EnabledTaskListResource;
 import org.educama.shipment.api.resource.ShipmentTaskListResource;
 import org.educama.shipment.boundary.ShipmentTaskBoundaryService;
 import org.educama.shipment.api.datastructure.ShipmentTaskDS;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -32,5 +35,16 @@ public class ShipmentTaskController {
         List <ShipmentTaskDS> tasks = shipmentTaskBoundaryService.findAllActive();
         ShipmentTaskListResource taskList = new ShipmentTaskListResource().fromTaskCollection(tasks);
         return taskList;
+    }
+
+    /**
+     *
+     * @return a Tasklist with enabled tasks for a specific shipment
+     */
+    @RequestMapping(value = "/enabled/{trackingId}", method = RequestMethod.GET)
+    public EnabledTaskListResource getEnabledTasks(@PathVariable("trackingId") String trackingId) {
+        List <EnabledTaskDS> enabledTask = shipmentTaskBoundaryService.findAllEnabledTasksForShipmentShipment(trackingId);
+        EnabledTaskListResource enabledTaskListResource = new EnabledTaskListResource().fromTaskCollection(enabledTask);
+        return enabledTaskListResource;
     }
 }
