@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {TaskResource} from "../../shipment-common/api/resources/task.resource";
+import {TaskResource} from "../../../shipment/shipment-common/api/resources/task.resource";
 import {TaskListRowModel} from "../container/task-list-page.model";
 
 @Component({
