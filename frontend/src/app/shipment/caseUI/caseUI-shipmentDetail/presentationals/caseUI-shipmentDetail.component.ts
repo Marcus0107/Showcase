@@ -1,7 +1,22 @@
-import {Component} from "@angular/core";
+import {Component, DoCheck, Input, OnInit} from "@angular/core";
+import {ShipmentResource} from "../../../shipment-common/api/resources/shipment.resource";
 @Component({
-  selector: "educama-caseui-shipment.detail",
-  templateUrl: "caseUI-shipmentDetail.component.html"
+  selector: "educama-caseui-shipment-detail",
+  templateUrl: "./caseUI-shipmentDetail.component.html"
 })
-export class CaseUIShipmentDetailComponent {
+export class CaseUIShipmentDetailComponent implements OnInit {
+  @Input()
+  public shipment: ShipmentResource;
+
+
+  constructor() {
+
+  }
+
+  public ngOnInit() {
+
+  }
+
+
+
 }
