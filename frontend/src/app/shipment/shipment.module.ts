@@ -11,7 +11,7 @@ import {ShipmentRoutingModule} from "./shipment-routing/shipment-routing.module"
       ShipmentCommonModule,
       ShipmentListModule,
       ShipmentRoutingModule,
-      TaskListModule
+      TaskListModule,
     ]
 })
 export class ShipmentModule {
