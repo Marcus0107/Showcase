@@ -10,6 +10,7 @@ import {
   RequestEnabledTasksForShipmentAction
 } from "../../shipment-common/store/enbaled-tasks/enabled-task-list-page.actions";
 import {TaskService} from "../../shipment-common/api/task.service";
+import {TaskResource} from "../../shipment-common/api/resources/task.resource";
 
 
 
@@ -54,8 +55,8 @@ export class EnabledTaskListPageComponent implements OnInit, OnDestroy {
   // Event Handler
   // ***************************************************
 
-  public onTaskSelectedEvent(trackingId: string) {
-    this._router.navigate(["/shipments/edit/" + trackingId]);
+  public onTaskSelectedEvent(taskResource: TaskResource) {
+    this._taskService.manuallyStartEnabledTask(taskResource.trackingId, taskResource.name);
   }
 
   // ***************************************************
