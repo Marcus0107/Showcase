@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, DoCheck, OnDestroy, OnInit} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {Observable, Subscription} from "rxjs";
 import {State} from "../../../app.reducers";
@@ -7,10 +7,12 @@ import {EnabledTaskListSlice} from "../../shipment-common/store/enbaled-tasks/en
 import {EnabledTaskListModel, EnabledTaskListRowModel} from "./enabled-task-list-page.model";
 import {
   InitializeEnabledTaskListAction,
-  RequestEnabledTasksForShipmentAction
+  RequestEnabledTasksForShipmentAction, StartEnabledTaskAction
 } from "../../shipment-common/store/enbaled-tasks/enabled-task-list-page.actions";
 import {TaskService} from "../../shipment-common/api/task.service";
 import {TaskResource} from "../../shipment-common/api/resources/task.resource";
+import {RequestTasksForShipmentAction} from "../../shipment-common/store/tasks/task-list-page.actions";
+import {timeout} from "rxjs/operator/timeout";
 
 
 
@@ -56,7 +58,10 @@ export class EnabledTaskListPageComponent implements OnInit, OnDestroy {
   // ***************************************************
 
   public onTaskSelectedEvent(taskResource: TaskResource) {
-    this._taskService.manuallyStartEnabledTask(taskResource.trackingId, taskResource.name);
+    this._store.dispatch(new StartEnabledTaskAction(taskResource.trackingId, taskResource.name));
+    this._store.dispatch(new RequestTasksForShipmentAction(taskResource.trackingId));
+    this._store.dispatch(new RequestEnabledTasksForShipmentAction(taskResource.trackingId));
+
   }
 
   // ***************************************************

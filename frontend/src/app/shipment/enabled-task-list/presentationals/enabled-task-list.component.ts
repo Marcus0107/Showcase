@@ -27,7 +27,7 @@ export class EnabledTaskListComponent {
 
   }
 
-  public onRowSelect(event: Event) {
-    this.taskSelectedEvent.emit(this.selectedEnabledTask);
+  public onRowSelect(event: TaskResource) {
+    this.taskSelectedEvent.emit(event);
   }
 }

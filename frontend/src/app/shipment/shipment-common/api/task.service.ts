@@ -41,7 +41,6 @@ export class TaskService {
   }
 
   public manuallyStartEnabledTask(trackingId: string, name: string): Observable<TaskListResource> {
-    return this._restClientService.post(this.TASK_RESOURCE_PATH + "/enabled/start/" + trackingId + "/" + name);
-
+   return this._restClientService.post(this.TASK_RESOURCE_PATH + "/enabled/start/" + trackingId + "/" + name);
   }
 }
