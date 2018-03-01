@@ -2,4 +2,21 @@
   <educama-caseui-shipment-detail
     [shipment]="shipmentDetailInfoModel.shipment"
   ></educama-caseui-shipment-detail>
+
+
+  <p-autoComplete placeholder="Airline"
+                  field="name"
+                  [(ngModel)]="selectedAirline"
+                  [suggestions]="airlineSuggestion"
+                  (completeMethod)="loadAirlineSuggestions($event)"
+                  (onSelect)="onAirlineSelected($event)"
+  ></p-autoComplete>
+
+  <p-autoComplete placeholder="Airport"
+                  field="city"
+                  [(ngModel)]="selectedAirport"
+                  [suggestions]="airportSuggestion"
+                  (completeMethod)="loadAirportSuggestions($event)"
+                  (onSelect)="onAirportSelected($event)"
+  ></p-autoComplete>
 </div>

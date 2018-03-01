@@ -8,6 +8,12 @@ import {State} from "../../../../app.reducers";
 import {Store} from "@ngrx/store";
 import * as actions from "../../../shipment-common/store/shipments/shipment-capture-page.actions";
 import {CaseUIShipmentDetailModel} from "./caseUI-shipmentDetail-page.model";
+import {AirlineService} from "../../../../flights/flights-common/api/airlines/airline.service";
+import {AirlineResource} from "../../../../flights/flights-common/api/airlines/airline.resource";
+import {AirlineSuggestionsResource} from "../../../../flights/flights-common/api/airlines/airline-suggestions.resource";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AirportService} from "../../../../flights/flights-common/api/airports/airport.service";
+import {AirportResource} from "../../../../flights/flights-common/api/airports/airport.resource";
 
 
 @Component({
@@ -16,6 +22,12 @@ import {CaseUIShipmentDetailModel} from "./caseUI-shipmentDetail-page.model";
 })
 export class CaseUIShipmentDetailPageComponent implements OnInit, OnDestroy {
 
+
+  public airlineSuggestion: any;
+  public airportSuggestion: any;
+
+  selectedAirline: AirlineResource;
+  selectedAirport: AirportResource;
   // relevant slice of store and subscription for this slice
   public shipmentDetailSlice: Observable<ShipmentCaptureSlice>;
   public shipmentDetailSliceSubscription: Subscription;
@@ -25,7 +37,9 @@ export class CaseUIShipmentDetailPageComponent implements OnInit, OnDestroy {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _shipmentService: ShipmentService,
-              private _store: Store<State>) {
+              private _store: Store<State>,
+              private _airlineService: AirlineService,
+              private _airportService: AirportService) {
 
     this.shipmentDetailSlice = this._store.select(state => state.shipmentCaptureSlice);
 
@@ -51,7 +65,24 @@ export class CaseUIShipmentDetailPageComponent implements OnInit, OnDestroy {
   // ***************************************************
   // Event Handler
   // ***************************************************
+  public loadAirlineSuggestions(event: any) {
+    this._airlineService.findAirlineSuggestions(event.query)
+      .subscribe(customerSuggestionResource => this.airlineSuggestion = customerSuggestionResource);
+  }
 
+  public loadAirportSuggestions(event: any) {
+    this._airportService.findAirportSuggestions(event.query)
+      .subscribe(customerSuggestionResource => this.airportSuggestion = customerSuggestionResource);
+  }
+  public onAirlineSelected(airline: AirlineResource) {
+
+    this.selectedAirline = airline;
+  }
+
+  public onAirportSelected(airport: AirportResource) {
+
+    this.selectedAirport = airport;
+  }
 
   // ***************************************************
   // Data Retrieval
@@ -69,4 +100,6 @@ export class CaseUIShipmentDetailPageComponent implements OnInit, OnDestroy {
   private updateShipmentCaptureModel(shipmentCaptureSlice: ShipmentCaptureSlice) {
     this.shipmentDetailInfoModel.shipment = shipmentCaptureSlice.shipment;
   }
+
+
 }
