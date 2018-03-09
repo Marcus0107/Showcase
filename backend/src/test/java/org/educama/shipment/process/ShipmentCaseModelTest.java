@@ -209,9 +209,15 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult().isEnabled());
 
         // Stage 'PlanItem_HumanTask_CreateInvoice' is available?
-        assertFalse(processEngine().getCaseService().createCaseExecutionQuery()
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_CREATE_INVOICE)
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult().isAvailable());
+
+        // Stage 'PlanItem_HumanTask_OrganizeFlight' is active?
+        assertTrue(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult().isActive());
+
     }
 
     @Test
@@ -246,6 +252,12 @@ public class ShipmentCaseModelTest extends AbstractProcessEngineRuleTest {
         assertNull(processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_CREATE_INVOICE)
                 .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
+        // Stage 'PlanItem_HumanTask_OrganizeFlight' is available?
+        assertNull(processEngine().getCaseService().createCaseExecutionQuery()
+                .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT)
+                .caseInstanceBusinessKey(shipment.trackingId).singleResult());
+
     }
 
     /**
