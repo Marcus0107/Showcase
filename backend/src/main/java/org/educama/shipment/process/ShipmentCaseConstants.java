@@ -18,7 +18,6 @@ public final class ShipmentCaseConstants {
     public static final String PLAN_ITEM_HUMAN_TASK_CHANGE_SHIPMENT_ORDER = "PlanItem_HumanTask_ChangeShipmentOrder";
     public static final String PLAN_ITEM_HUMAN_TASK_COMPLETE_SHIPMENT_ORDER = "PlanItem_HumanTask_CompleteShipmentOrder";
     public static final String PLAN_ITEM_HUMAN_TASK_ORGANIZE_FLIGHT = "PlanItem_HumanTask_OrganizeFlight";
-    
 
 
     // Stages
