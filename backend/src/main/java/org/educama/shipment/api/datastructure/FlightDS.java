@@ -8,19 +8,21 @@ import org.educama.shipment.model.Flight;
 public class FlightDS {
 
     public String flightNumber;
+    public double price;
+    public String departureTime;
 
     private FlightDS() {
         // empty
     }
 
     public FlightDS(Flight flight) {
-        System.out.println("Constructor: " + flight.flightNumber);
         this.flightNumber = flight.flightNumber;
+        this.price = flight.price;
+        this.departureTime = flight.departureTime;
     }
 
     public Flight toFlight() {
-        System.out.println("toFlight: " + this.flightNumber);
-                return new Flight(this.flightNumber);
+                return new Flight(this.flightNumber, this.price, this.departureTime);
     }
 
 }
