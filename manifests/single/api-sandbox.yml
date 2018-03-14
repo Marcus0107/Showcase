@@ -8,4 +8,4 @@ applications:
   disk_quota: 256M
   env:
     EDUCAMA_BACKEND_URL: http://educama-backend-sandbox.mybluemix.net
-    EDUCAMA_FLIGHTSERVICE_URL: http://educama-flight-service-sandbox.mybluemix.net    
+    EDUCAMA_FLIGHTSERVICE_URL: http://educama-flightService-service-sandbox.mybluemix.net

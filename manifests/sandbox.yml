@@ -8,7 +8,7 @@ applications:
   disk_quota: 256M
   env:
     EDUCAMA_BACKEND_URL: http://educama-backend-sandbox.mybluemix.net
-    EDUCAMA_FLIGHTSERVICE_URL: http://educama-flight-service-sandbox.mybluemix.net    
+    EDUCAMA_FLIGHTSERVICE_URL: http://educama-flightService-service-sandbox.mybluemix.net
 - name: educama-backend
   host: educama-backend-sandbox
   path: ../backend/target/educama-backend-exec.jar
@@ -27,14 +27,14 @@ applications:
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git#v1.3.16
   memory: 64M
   disk_quota: 64M
-- name: educama-flight-service
-  host: educama-flight-service-sandbox
+- name: educama-flightService-service
+  host: educama-flightService-service-sandbox
   path: ../services/flightinformation/target/flightinformation-0.0.1-SNAPSHOT.jar
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.10
   memory: 512M
   disk_quota: 256M
   services:
-   - flight-service-database
+   - flightService-service-database
 - name: educama-supplier-simulator-backend
   host: educama-supplier-simulator-backend-sandbox
   path: ../services/educama-supplier-simulator-backend

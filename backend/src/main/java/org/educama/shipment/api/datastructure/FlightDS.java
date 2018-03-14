@@ -14,11 +14,13 @@ public class FlightDS {
     }
 
     public FlightDS(Flight flight) {
+        System.out.println("Constructor: " + flight.flightNumber);
         this.flightNumber = flight.flightNumber;
     }
 
     public Flight toFlight() {
-        return new Flight(this.flightNumber);
+        System.out.println("toFlight: " + this.flightNumber);
+                return new Flight(this.flightNumber);
     }
 
 }

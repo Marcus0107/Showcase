@@ -12,9 +12,9 @@ public class FlightConnection {
     private String airlineIataCode;
     private String sourceAirportIataCode;
     private String destinationAirportIataCode;
-    // true if this flight is a codeshare  is, not operated by Airline, but another carrier
+    // true if this flightService is a codeshare  is, not operated by Airline, but another carrier
     private boolean codeshare;
-    // Number of stops on this flight
+    // Number of stops on this flightService
     private int stops;
 
     public String getAirlineIataCode() {

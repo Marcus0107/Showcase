@@ -13,7 +13,7 @@ educama:
     url: http://localhost:8082
 
   flightservice:
-    url: https://educama-flight-service.mybluemix.net
+    url: https://educama-flightService-service.mybluemix.net
 
 # API Gateway Configuration
 zuul:

@@ -5,3 +5,7 @@ export class Party {
     public uuid: string;
     public address: Address;
 }
+
+export class Flight {
+  public flightNumber = "1234";
+}

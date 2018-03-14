@@ -29,7 +29,7 @@ public class FlightConnectionController {
      *
      * @param sourceAirportIata      the IATA code of the source airport
      * @param destinationAirportIata the IATA code of the destination airport
-     * @return The available flight connections.
+     * @return The available flightService connections.
      */
     @RequestMapping(value = "/connections")
     public Page<FlightConnection> getAllConnectionFromSourceToDestination(@RequestParam(value = "from") String sourceAirportIata, @RequestParam(value = "to") String destinationAirportIata, Pageable pageable) {
@@ -38,10 +38,10 @@ public class FlightConnectionController {
 
 
     /**
-     * Replaces the content of the flight connection database with the content of the CSV file
+     * Replaces the content of the flightService connection database with the content of the CSV file
      * the data contained in the csv File.
      *
-     * @param file the import file containing the flight connections data
+     * @param file the import file containing the flightService connections data
      */
     @RequestMapping(value = "/connections/import/csv", method = RequestMethod.POST)
     @ResponseBody
