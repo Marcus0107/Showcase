@@ -4,7 +4,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Date;
 
 /**
  * This represents the invoice entity used for database persistence.
