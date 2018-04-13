@@ -100,5 +100,19 @@
   "ACTIVE-TASK-LIST-TITLE": "Aktive Aufgaben",
   "ENABLED-TASK-LIST-TITLE": "Aktivierbare Aufgaben",
   "SHIPMENT-DETAILS": "Transportinformationen",
-  "ACTIVATE-TASK":"Aktivieren"
+  "ACTIVATE-TASK":"Aktivieren",
+  "INVOICE-CREATION-DATE": "Rechnungs-Datum",
+  "PRE-CARRIGE": "Vorlauf",
+  "EXPORT-INSURANCE": "Exportversicherung",
+  "EXPORT-CUSTOMS-CLEARANCE": "Ausfuhr Zollabfertigung",
+  "IMPORT-CUSTOMS-CLEARANCE": "Einfuhr Zollabfertigung",
+  "IMPORT-INSURANCE": "Importversicherung",
+  "ON-CARRIGE": "Auffahrt",
+  "MANAGEMENT-FEE": "Managementgebühr",
+  "SERVICE-FEE": "Bearbeitungsgebühr",
+  "DISCOUNT": "Rabatt",
+  "INVOICE-NUMBER": "Rechnungs-Nummer",
+  "CREATE-INVOICE": "Rechnungserstellung",
+  "INVOICE-SUM": "Gesamtsumme",
+  "FLIGHT-PRICE": "Flugpreis"
 }

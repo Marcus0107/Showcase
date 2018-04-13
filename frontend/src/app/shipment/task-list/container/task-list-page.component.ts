@@ -76,7 +76,7 @@ export class TaskListPageComponent implements OnInit, OnDestroy {
       case "Create invoice":
         this._router.navigate(["caseui/" + task.trackingId + "/createInvoice"]);
         break;
-        default:
+      default:
         break;
     }
   }
