@@ -151,7 +151,7 @@ public class RestApiDocumentation {
         };
 
         // Active Task Resource
-        fieldDescriptorActiveTask = new FieldDescriptor[] {
+        fieldDescriptorActiveTask = new FieldDescriptor[]{
                 fieldWithPath("createTime").description("The create time of the task"),
                 fieldWithPath("dueDate").description("The due date of the task"),
                 fieldWithPath("trackingId").description("The unique business key of the shipment mapped to the task"),
@@ -176,7 +176,7 @@ public class RestApiDocumentation {
         };
 
         // Enabled Task Resource
-        fieldDescriptorEnabledTask = new FieldDescriptor[] {
+        fieldDescriptorEnabledTask = new FieldDescriptor[]{
                 fieldWithPath("trackingId").description("The unique business key of the shipment mapped to the task"),
                 fieldWithPath("id").description("The Id of the task"),
                 fieldWithPath("name").description("The task name"),
@@ -186,7 +186,7 @@ public class RestApiDocumentation {
 
         // Task Resource
 
-        fieldDescriptorTask = new FieldDescriptor[] {
+        fieldDescriptorTask = new FieldDescriptor[]{
                 fieldWithPath("createTime").description("The create time of the task"),
                 fieldWithPath("dueDate").description("The due date of the task"),
                 fieldWithPath("trackingId").description("The unique business key of the shipment mapped to the task"),
@@ -231,10 +231,10 @@ public class RestApiDocumentation {
 
         fieldDescriptorCustomerResource =
                 ArrayUtils.addAll(
-                    ArrayUtils.add(
-                            fieldDescriptorSaveCustomerResource,
-                            fieldWithPath("uuid").description("The identifier of the resource")),
-                    fieldDescriptorSelfLink);
+                        ArrayUtils.add(
+                                fieldDescriptorSaveCustomerResource,
+                                fieldWithPath("uuid").description("The identifier of the resource")),
+                        fieldDescriptorSelfLink);
 
         fieldDescriptorCustomerListResource = new FieldDescriptor[]{
                 fieldWithPath("pageNumber").description("Number of the actual page"),
@@ -245,23 +245,23 @@ public class RestApiDocumentation {
                 fieldWithPath("customers[]").description("An array of customer objects")};
 
         // Invoice Resource
-         fieldDescriptorInvoiceResource = new FieldDescriptor[]{
-                 fieldWithPath("invoiceNumber").description("The Number of the invoice"),
-                 fieldWithPath("invoiceCreationDate").description("The Invoice creation date"),
-                 fieldWithPath("preCarriage").description("The price of the pre-carriage"),
-                 fieldWithPath("exportInsurance").description("The price of the export insurance"),
-                 fieldWithPath("exportCustomsClearance").description("The price of the export customs clearance"),
-                 fieldWithPath("flightPrice").description("The price of the flight"),
-                 fieldWithPath("importInsurance").description("The price of the import insurance"),
-                 fieldWithPath("importCustomsClearance").description("The price of the import customs clearance"),
-                 fieldWithPath("onCarriage").description("The price of the on-carriage"),
-                 fieldWithPath("managementFee").description("The price of the management fee"),
-                 fieldWithPath("serviceFee").description("The price of the service fee"),
-                 fieldWithPath("discount").description("The price of the discount"),
+        fieldDescriptorInvoiceResource = new FieldDescriptor[]{
+                fieldWithPath("invoiceNumber").description("The Number of the invoice"),
+                fieldWithPath("invoiceCreationDate").description("The Invoice creation date"),
+                fieldWithPath("preCarriage").description("The price of the pre-carriage"),
+                fieldWithPath("exportInsurance").description("The price of the export insurance"),
+                fieldWithPath("exportCustomsClearance").description("The price of the export customs clearance"),
+                fieldWithPath("flightPrice").description("The price of the flight"),
+                fieldWithPath("importInsurance").description("The price of the import insurance"),
+                fieldWithPath("importCustomsClearance").description("The price of the import customs clearance"),
+                fieldWithPath("onCarriage").description("The price of the on-carriage"),
+                fieldWithPath("managementFee").description("The price of the management fee"),
+                fieldWithPath("serviceFee").description("The price of the service fee"),
+                fieldWithPath("discount").description("The price of the discount"),
 
-         };
+        };
 
-        }
+    }
 
     @Test
     public void createShipmentTest() throws Exception {
@@ -481,7 +481,7 @@ public class RestApiDocumentation {
 
         this.mockMvc
                 .perform(get(CustomerController.CUSTOMER_RESOURCE_PATH + "/suggestions")
-                .param("term", "ste"))
+                        .param("term", "ste"))
                 .andExpect(status().isOk())
                 .andDo(this.documentationHandler
                         .document(
@@ -499,7 +499,7 @@ public class RestApiDocumentation {
                 .andExpect(status().isCreated()).andReturn();
 
         JSONObject jsonResult = new JSONObject(result.getResponse().getContentAsString());
-        String trackingId =  jsonResult.getString("trackingId");
+        String trackingId = jsonResult.getString("trackingId");
 
         CaseExecution completeShipmentOrderCaseExecution = processEngine().getCaseService().createCaseExecutionQuery()
                 .activityId(ShipmentCaseConstants.PLAN_ITEM_HUMAN_TASK_COMPLETE_SHIPMENT_ORDER)
@@ -513,18 +513,42 @@ public class RestApiDocumentation {
 
         //Get Completed Task
         this.mockMvc.perform(get("/educama/v1/tasks/completed" + "/" + trackingId))
-                    .andExpect(status().isOk())
-                    .andDo(this.documentationHandler
-                            .document(
-                                    responseFields(fieldWithPath("tasks[]").description("An array of completed task objects"))
-                                            .andWithPrefix("tasks[].", fieldDescriptorCompletedTaskResource))
-                    );
+                .andExpect(status().isOk())
+                .andDo(this.documentationHandler
+                        .document(
+                                responseFields(fieldWithPath("tasks[]").description("An array of completed task objects"))
+                                        .andWithPrefix("tasks[].", fieldDescriptorCompletedTaskResource))
+                );
+    }
+
+    @Test
+    public void getInvoiceTest() throws Exception {
+        ResultActions result = createInvoice();
+        String requestURI = result.andReturn().getRequest().getRequestURI();
+
+        this.mockMvc.perform(get(requestURI)).andExpect(status().isOk())
+                .andDo(this.documentationHandler.document(
+                        responseFields(
+                                fieldWithPath("invoiceNumber").description("The ID of the invoice"),
+                                fieldWithPath("invoiceCreationDate").description("The Invoice creation date"),
+                                fieldWithPath("preCarriage").description("The price of the pre-carriage"),
+                                fieldWithPath("exportInsurance").description("The price of the export insurance"),
+                                fieldWithPath("exportCustomsClearance").description("The price of the export customs clearance"),
+                                fieldWithPath("flightPrice").description("The price of the flight"),
+                                fieldWithPath("importInsurance").description("The price of the import insurance"),
+                                fieldWithPath("importCustomsClearance").description("The price of the import customs clearance"),
+                                fieldWithPath("onCarriage").description("The price of the on-carriage"),
+                                fieldWithPath("managementFee").description("The price of the management fee"),
+                                fieldWithPath("serviceFee").description("The price of the service fee"),
+                                fieldWithPath("discount").description("The price of the discount"))
+                ));
     }
 
     @Test
     public void listInvoicesTest() throws Exception {
         ResultActions result = createInvoice();
         String requestURI = result.andReturn().getRequest().getRequestURI();
+        requestURI = requestURI.replace("invoice", "invoices");
 
         this.mockMvc.perform(get(requestURI)).andExpect(status().isOk())
                 .andDo(this.documentationHandler.document(
@@ -629,7 +653,7 @@ public class RestApiDocumentation {
         return customer;
     }
 
-    private Map<String, Object>  createShipmentResourceHashMap() throws Exception {
+    private Map<String, Object> createShipmentResourceHashMap() throws Exception {
         String uuidSender = createCustomer("Herbert Hollig");
         String uuidReceiver = createCustomer("Herbert Hollig");
         Map<String, Object> shipment = new LinkedHashMap<>();
@@ -668,7 +692,7 @@ public class RestApiDocumentation {
         return shipment;
     }
 
-    private Map<String, Object>  updateShipmentResourceHashMap() throws Exception {
+    private Map<String, Object> updateShipmentResourceHashMap() throws Exception {
         String uuidSender = createCustomer("Herbert Update");
         String uuidReceiver = createCustomer("Herbert Update");
         Map<String, Object> shipment = new LinkedHashMap<>();
@@ -726,7 +750,7 @@ public class RestApiDocumentation {
     }
 
     // Create a Shipment without Cargo informations.
-    private Map<String, Object>  createIncompleteShipmentResourceHashMap() throws Exception {
+    private Map<String, Object> createIncompleteShipmentResourceHashMap() throws Exception {
         String uuidSender = createCustomer("Herbert Hollig");
         String uuidReceiver = createCustomer("Herbert Hollig");
         Map<String, Object> shipment = new LinkedHashMap<>();
