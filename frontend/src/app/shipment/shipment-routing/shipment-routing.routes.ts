@@ -1,8 +1,8 @@
-import {Routes} from "@angular/router";
+  import {Routes} from "@angular/router";
 import {ShipmentListPageComponent} from "../shipment-list/container/shipment-list-page.component";
 import {TaskListPageComponent} from "../task-list/container/task-list-page.component";
 import {ShipmentCapturePageComponent} from "../shipment-capture/container/shipment-capture-page.component";
-import {CaseUiComponent} from "../caseUI/caseUi.component";
+import {CaseUiComponent} from "../caseUI/case-ui.component";
 import {EnabledTaskListPageComponent} from "../enabled-task-list/container/enabled-task-list-page.component";
 import {OrganizeFlightFormPageComponent} from "../../flights/organize-flight-form/container/organize-flight-form-page.component";
 import {ShipmentInvoicePageComponent} from "../shipment-invoice/container/shipment-invoice-page.component";

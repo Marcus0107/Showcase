@@ -1,0 +1,20 @@
+<div class="shipment-capture-component">
+  <p-tabView>
+    <p-tabPanel header="Shipment">
+      <div ng-if="completeShipmentIsSelected()">
+        <router-outlet></router-outlet>
+      </div>
+      <div ng-if="!completeShipmentIsSelected()">
+      </div>
+    </p-tabPanel>
+      <p-tabPanel [disabled]="true" header="Flight">
+        <div *ngif="">
+          <router-outlet></router-outlet>
+        </div>
+        <div *ngif="">
+          <button></button>
+        </div>
+      </p-tabPanel>
+
+  </p-tabView>
+</div>

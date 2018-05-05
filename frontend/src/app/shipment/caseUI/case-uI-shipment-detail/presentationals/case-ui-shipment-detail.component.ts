@@ -3,8 +3,8 @@ import {ShipmentResource} from "../../../shipment-common/api/resources/shipment.
 
 @Component({
   selector: "educama-caseui-shipment-detail",
-  templateUrl: "./caseUI-shipmentDetail.component.html",
-  styleUrls: ["../caseUI-shipmentDetail-style.scss"]
+  templateUrl: "./case-ui-shipment-detail.component.html",
+  styleUrls: ["../case-ui-shipment-detail-style.scss"]
 })
 export class CaseUIShipmentDetailComponent {
   @Input()
