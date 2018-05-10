@@ -8,10 +8,7 @@ import {State} from "../../../app.reducers";
 import {ActivatedRoute, Router} from "@angular/router";
 import {InvoiceResource} from "../../shipment-common/api/resources/invoice.resource";
 import {CreateInvoiceAction} from "../../shipment-common/store/shipments/invoice-page/invoice-page.actions";
-import {
-  RequestTasksAction,
-  RequestTasksForShipmentAction
-} from "../../shipment-common/store/tasks/task-list-page.actions";
+import {ReloadStoreAction} from "../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.actions";
 
 @Component({
   selector: "educama-shipment-invoice-page",
@@ -21,7 +18,7 @@ export class ShipmentInvoicePageComponent implements OnDestroy {
 
   // relevant slice of store and subscription for this slice
   public invoiceListSlice: Observable<InvoicePageSlice>;
-  public enabledTaskListSliceSubscription: Subscription;
+  public invoiceListSliceSubscription: Subscription;
 
   // model for the page
   public enabledTaskListModel: ShipmentInvoicePageModel = new ShipmentInvoicePageModel();
@@ -32,26 +29,28 @@ export class ShipmentInvoicePageComponent implements OnDestroy {
 
     this.invoiceListSlice = this._store.select(state => state.invoicePageSlice);
 
-    this.enabledTaskListSliceSubscription = this.invoiceListSlice
+    this.invoiceListSliceSubscription = this.invoiceListSlice
       .subscribe(invoiceListSlice => this.invoiceListSlice);
   }
 
 
   public ngOnDestroy() {
-    this.enabledTaskListSliceSubscription.unsubscribe();
+    this.invoiceListSliceSubscription.unsubscribe();
   }
 
   // ***************************************************
   // Event Handler
   // ***************************************************
 
-    public onCreateInvoiceEvent(invoiceResource: InvoiceResource) {
-    let trackingId = "";
-    this._activatedRoute.parent.params.subscribe(params => {
-      this._store.dispatch(new CreateInvoiceAction(params["id"], invoiceResource));
-      trackingId = params["id"];
-      });
+  public onCreateInvoiceEvent(invoiceResource: InvoiceResource) {
+    let trackingId = invoiceResource.trackingId;
+    this._store.dispatch(new CreateInvoiceAction(trackingId, invoiceResource));
+    this._router.navigate(["caseui/" + trackingId]);
+    this._store.dispatch(new ReloadStoreAction(trackingId));
+  }
 
-      this._router.navigate(["/caseui/" + trackingId]);
+  public onCancelInvoiceEvent(trackingId: string) {
+    this._router.navigate(["caseui/" + trackingId]);
+    this._store.dispatch(new ReloadStoreAction(trackingId));
   }
 }
