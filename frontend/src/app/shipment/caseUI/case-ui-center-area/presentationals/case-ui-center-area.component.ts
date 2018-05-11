@@ -1,63 +1,137 @@
-import {Component, Input, OnInit, AfterViewInit} from "@angular/core";
+import {Component, Input, OnChanges} from "@angular/core";
 import {ShipmentResource} from "../../../shipment-common/api/resources/shipment.resource";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router, ActivatedRoute} from "@angular/router";
 import {InvoiceResource} from "../../../shipment-common/api/resources/invoice.resource";
+import {NavigationStart, Router} from "@angular/router";
+import {Subscription} from "rxjs/Subscription";
+import {ShipmentCaptureSlice} from "../../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.slice";
+import {Observable} from "rxjs/Observable";
+import {InvoicePageSlice} from "../../../shipment-common/store/shipments/invoice-page/invoice-page.slice";
 import {State} from "../../../../app.reducers";
 import {Store} from "@ngrx/store";
-import {RequestTasksForShipmentAction} from "../../../shipment-common/store/tasks/task-list-page.actions";
-import {Observable} from "rxjs/Observable";
-import {TaskListSlice} from "../../../shipment-common/store/tasks/task-list-page.slice";
-import {Subscription} from "rxjs/Subscription";
-import {CompletedTaskListEffect} from "../../../shipment-common/effects/completed-task-list.effect";
+import {CompletedTaskListResource} from "../../../shipment-common/api/resources/completed-task-list.resource";
+import {CompletedTaskListModel} from "../../../completed-task-list/container/completed-task-list-page.model";
 import {CompletedTaskListSlice} from "../../../shipment-common/store/completed-tasks/completed-task-list-page.slice";
 import {CompletedTaskResource} from "../../../shipment-common/api/resources/completed-task.resource";
+import {TaskResource} from "../../../shipment-common/api/resources/task.resource";
+import {TaskListSlice} from "../../../shipment-common/store/tasks/task-list-page.slice";
 import {isUndefined} from "util";
 
 @Component({
   selector: "educama-caseui-center-area",
   templateUrl: "./case-ui-center-area.component.html"
 })
-export class CaseUiCenterAreaComponent implements OnInit {
-  @Input()
+export class CaseUiCenterAreaComponent {
+
   public shipment: ShipmentResource;
-
-  @Input()
   public invoice: InvoiceResource;
+  public completedTasks: CompletedTaskResource[];
+  public activeTasks: TaskResource[];
+  public selectedTask: string;
 
+  public selectedTabIndex = 0;
 
-  public activeTaskListSlice: Observable<CompletedTaskListSlice>;
-  public activeTaskListSliceSubscription: Subscription;
+  public shipmentSliceSubscription: Subscription;
+  public invoiceSliceSubscription: Subscription;
+  public completedTaskListSubscription: Subscription;
+  public activeTaskListSubscription: Subscription;
 
-  public invoiceSelected: boolean;
+  // relevant slice of store and subscription for this slice
+  public shipmentSlice: Observable<ShipmentCaptureSlice>;
+  public invoiceSlice: Observable<InvoicePageSlice>;
+  public completedTaskListSlice: Observable<CompletedTaskListSlice>;
+  public activeTaskListSlice: Observable<TaskListSlice>;
 
-  constructor(private _formBuilder: FormBuilder,
-              private _router: Router,
-              private _activatedRoute: ActivatedRoute,
+  public enableFlightTab = false;
+  public enableInvoiceTab = false;
+
+  constructor(private _router: Router,
               private _store: Store<State>) {
 
-    this.activeTaskListSlice = this._store.select(state => state.completedTaskListSlice);
-    this.activeTaskListSliceSubscription = this.activeTaskListSlice.subscribe(
-      invoiceSlice => {
+
+    _router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.evaluateUrl(event.toString());
+      }
+    });
+
+    this.shipmentSlice = this._store.select(state => state.shipmentCaptureSlice);
+    this.shipmentSliceSubscription = this.shipmentSlice.subscribe(
+      shipmentCaptureSlice => this.updateShipmentModel(shipmentCaptureSlice)
+    );
+
+    this.invoiceSlice = this._store.select(state => state.invoicePageSlice);
+    this.invoiceSliceSubscription = this.invoiceSlice.subscribe(
+      invoiceSlice => this.updateInvoiceModel(invoiceSlice)
+    );
+
+    this.completedTaskListSlice = this._store.select(state => state.completedTaskListSlice);
+    this.completedTaskListSubscription = this.completedTaskListSlice.subscribe(
+      completedTaskListSlice => {
+        this.evaluateCompletedTask(completedTaskListSlice.completedTaskList);
+        return this.updateCompletedTaskList(completedTaskListSlice);
+      }
+    );
+
+    this.activeTaskListSlice = this._store.select(state => state.taskListSlice);
+    this.activeTaskListSubscription = this.activeTaskListSlice.subscribe(
+      activeTaskListSlice => {
+        this.evaluateActivedTask(activeTaskListSlice.taskList);
+        return this.updateActiveTaskList(activeTaskListSlice);
       }
     );
   }
 
+  private evaluateUrl(evevntString: string) {
+    if (evevntString.includes("changeShipment")) {
+      this.selectedTask = "changeShipment";
+      this.selectedTabIndex = 0;
+    } else if (evevntString.includes("completeShipment")) {
+      this.selectedTask = "completeShipment";
+      this.selectedTabIndex = 0;
+    } else if (evevntString.includes("organizeFlight")) {
+      this.selectedTask = "organizeFlight";
+      this.selectedTabIndex = 1;
+    } else if (evevntString.includes("createInvoice")) {
+      this.selectedTask = "createInvoice";
+      this.selectedTabIndex = 2;
+    } else {
+      this.selectedTask = "none";
+    }
+  }
 
-  public ngOnInit() {
-    //this.changeShipmentForm = this.initalizeChangeShipmentForm();
-    //this.displayInvoiceForm = this.initalizeInvoiceForm();
+  private evaluateCompletedTask(tasks: CompletedTaskResource[]) {
+    if (this.enableFlightTab !== true) {
+      this.enableFlightTab = !isUndefined(tasks.find(task => task.name === "Complete Shipment Order"));
+    }
+    if (this.enableInvoiceTab !== true) {
+      this.enableInvoiceTab = !isUndefined(tasks.find(task => task.name === "Organize Flight"));
+    }
+  }
 
+  private evaluateActivedTask(tasks: TaskResource[]) {
+    if (this.enableFlightTab !== true) {
+      this.enableFlightTab = !isUndefined(tasks.find(task => task.name === "Organize Flight"));
+    }
   }
 
 
-  public createInvoiceIsSelected() {
-    this._activatedRoute.parent.params.subscribe(params => {
-      if (this._router.url.includes("createInvoice")) {
-        this.invoiceSelected= true;
-      }else{
-        this.invoiceSelected = false;
-      }
-    });
+  // ***************************************************
+  // Data Retrieval
+  // ***************************************************
+
+  private updateShipmentModel(shipmentCaptureSlice: ShipmentCaptureSlice) {
+    this.shipment = shipmentCaptureSlice.shipment;
+  }
+
+  private updateInvoiceModel(invoicePageSlice: InvoicePageSlice) {
+    this.invoice = invoicePageSlice.invoice;
+  }
+
+  private updateCompletedTaskList(completedTaskListSlice: CompletedTaskListSlice) {
+    this.completedTasks = completedTaskListSlice.completedTaskList;
+  }
+
+  private updateActiveTaskList(activeTaskListSlice: TaskListSlice) {
+    this.activeTasks = activeTaskListSlice.taskList;
   }
 }

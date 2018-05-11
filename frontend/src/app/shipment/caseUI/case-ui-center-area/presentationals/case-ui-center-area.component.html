@@ -1,20 +1,32 @@
 <div class="shipment-capture-component">
-  <p-tabView>
-    <p-tabPanel header="Shipment">
-      <div ng-if="completeShipmentIsSelected()">
+  <p-tabView [activeIndex]="selectedTabIndex">
+    <p-tabPanel class="exampelClass" header="Shipment">
+      <div *ngIf="selectedTask == 'changeShipment'">
         <router-outlet></router-outlet>
       </div>
-      <div ng-if="!completeShipmentIsSelected()">
+      <div *ngIf="selectedTask == 'completeShipment'">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="selectedTask != 'changeShipment'">
+        Display Shipment
       </div>
     </p-tabPanel>
-      <p-tabPanel [disabled]="true" header="Flight">
-        <div *ngif="">
-          <router-outlet></router-outlet>
-        </div>
-        <div *ngif="">
-          <button></button>
-        </div>
-      </p-tabPanel>
 
+    <p-tabPanel *ngIf="enableFlightTab" header="Flight">
+      <div *ngIf="selectedTask == 'organizeFlight'">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="selectedTask != 'organizeFlight'">
+        display Flight
+      </div>
+    </p-tabPanel>
+    <p-tabPanel *ngIf="enableInvoiceTab" header="Invoice" >
+      <div *ngIf="selectedTask == 'createInvoice'">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="selectedTask != 'createInvoice'">
+        display invoice
+      </div>
+    </p-tabPanel>
   </p-tabView>
 </div>
