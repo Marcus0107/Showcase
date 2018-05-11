@@ -40,6 +40,9 @@ import {ORGANIZE_FLIGHT_SLICE_INITIAL_STATE
 import {InvoicePageSlice} from "./shipment/shipment-common/store/shipments/invoice-page/invoice-page.slice";
 import {INVOICE_LIST_SLICE_INITIAL_STATE} from "./shipment/shipment-common/store/shipments/invoice-page/invoice-page.initial-state";
 import {INVOICE_PAGE_REDUCER} from "./shipment/shipment-common/store/shipments/invoice-page/invoice-page.reducer";
+import {CASE_UI_CENTER_AREA_SLICE} from "./shipment/shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.initial-state";
+import {CaseUiCenterAreaSlice} from "./shipment/shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.slice";
+import {caseUiCenterAreaReducer, CASE_UI_CENTER_AREA_REDUCER} from "./shipment/shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.reducer";
 
 export interface State {
   shipmentListSlice: ShipmentListSlice;
@@ -54,6 +57,7 @@ export interface State {
   enabledTaskListSlice: EnabledTaskListSlice;
   organizeFlightPageSlice: OrganizeFlightSlice;
   invoicePageSlice: InvoicePageSlice;
+  caseUiCenterAreaSlice: CaseUiCenterAreaSlice;
 }
 
 export const INITIAL_STATE = {
@@ -68,7 +72,8 @@ export const INITIAL_STATE = {
   completedTaskListSlice: COMPLETED_TASK_LIST_SLICE_INITIAL_STATE,
   enabledTaskListSlice: ENABLED_TASK_LIST_SLICE_INITIAL_STATE,
   organizeFlightSlice: ORGANIZE_FLIGHT_SLICE_INITIAL_STATE,
-  invoiceSlice: INVOICE_LIST_SLICE_INITIAL_STATE
+  invoiceSlice: INVOICE_LIST_SLICE_INITIAL_STATE,
+  caseUiCenterAreaSlice: CASE_UI_CENTER_AREA_SLICE
 };
 
 export const reducers: ActionReducerMap<State> = {
@@ -83,5 +88,6 @@ export const reducers: ActionReducerMap<State> = {
   completedTaskListSlice: COMPLETED_TASK_LIST_PAGE_REDUCER,
   enabledTaskListSlice: ENABLED_TASK_LIST_PAGE_REDUCER,
   organizeFlightPageSlice: ORGANIZE_FLIGHT_PAGE_REDUCER,
-  invoicePageSlice: INVOICE_PAGE_REDUCER
+  invoicePageSlice: INVOICE_PAGE_REDUCER,
+  caseUiCenterAreaSlice: CASE_UI_CENTER_AREA_REDUCER
 };

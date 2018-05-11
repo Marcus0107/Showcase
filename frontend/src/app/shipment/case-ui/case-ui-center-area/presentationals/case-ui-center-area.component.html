@@ -1,0 +1,517 @@
+<div class="shipment-capture-component">
+  <p-tabView [activeIndex]="selectedTabIndex">
+    <p-tabPanel class="exampelClass" header="Shipment">
+      <div *ngIf="selectedTask == 'changeShipment'">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="selectedTask == 'completeShipment'">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="selectedTask != 'changeShipment'">
+        <form name="form" [formGroup]="displayShipmentForm" class="shipment-capture-form">
+          <div class="ui-g ui-fluid" style="">
+
+            <!-- Sender Address -->
+            <div class="ui-g-12 ui-lg-6">
+              <div class="ui-g">
+                <div class="ui-g-12 ui-md-3" style="margin-top: -1.5em;">
+                  <h4><label>{{'SHIPMENT-RESOURCE_SENDER' | translate}}</label></h4>
+                </div>
+                <div class="ui-g-12 ui-md-9" style="padding-top: 1.7em; margin-top: -1.5em;">
+                  <p-radioButton [(ngModel)]="customerTypeEnum"
+                                 name="customerTypeEnum"
+                                 value="RECEIVER"
+                                 formControlName="customerTypeEnum"
+                                 label="{{'SHIPMENT_CAPTURE_COMPONENT_CLIENT' | translate}}"
+                                 id="shipment-capture-component_receiver-is-customer"
+                  >
+                  </p-radioButton>
+                </div>
+              </div>
+
+
+              <div class="ui-g-9">
+                <input pInputText
+                       formControlName="senderName"
+                >
+              </div>
+
+              <div class="ui-g-12 ui-md-12 ui-xl-3">
+                <label>{{'SHIPMENT-RESOURCE_SENDER-STREET-NUMBER' | translate}}</label>
+              </div>
+              <div class="ui-g-12 ui-md-6 ui-xl-6">
+                <input pInputText
+                       formControlName="senderStreet"
+                       id="shipment-capture-component_sender-street"
+                >
+              </div>
+              <div class="ui-g-12 ui-md-6 ui-xl-3">
+                <input pInputText
+                       id="shipment-capture-component_sender-street_number"
+                       formControlName="senderStreetNo"
+                >
+              </div>
+
+              <div class="ui-g-12 ui-md-12 ui-xl-3">
+                <label>{{'SHIPMENT-RESOURCE_SENDER-ZIPCODE-CITY' | translate}}</label>
+              </div>
+              <div class="ui-g-12 ui-md-6 ui-xl-3">
+                <input pInputText
+                       formControlName="senderZipCode"
+                       id="shipment-capture-component_sender-zipcode"
+                >
+              </div>
+              <div class="ui-g-12 ui-md-6 ui-xl-6">
+                <input pInputText
+                       formControlName="senderCity"
+                       id="shipment-capture-component_sender-city"
+                >
+              </div>
+            </div>
+            <!-- Receiver Address -->
+            <div class="ui-g-12 ui-lg-6">
+              <div class="ui-g">
+                <div class="ui-g-12 ui-md-3" style="margin-top: -1.5em;">
+                  <h4><label>{{'SHIPMENT-RESOURCE_RECEIVER' | translate}}</label></h4>
+                </div>
+                <div class="ui-g-12 ui-md-9" style="padding-top: 1.7em; margin-top: -1.5em;">
+                  <p-radioButton [(ngModel)]="customerTypeEnum"
+                                 name="customerTypeEnum"
+                                 value="SENDER"
+                                 formControlName="customerTypeEnum"
+                                 label="{{'SHIPMENT_CAPTURE_COMPONENT_CLIENT' | translate}}"
+                                 id="shipment-capture-component_sender-is-customer"
+                  >
+                  </p-radioButton>
+                </div>
+              </div>
+              <div class="ui-g-9">
+                <input pInputText
+                       formControlName="receiverName"
+                >
+              </div>
+
+              <div class="ui-g-12 ui-md-12 ui-xl-3">
+                <label>{{'SHIPMENT-RESOURCE_RECEIVER-STREET-NUMBER' | translate}}</label>
+              </div>
+
+              <div class="ui-g-12 ui-md-6 ui-xl-6">
+                <input pInputText
+                       formControlName="receiverStreet"
+                       id="shipment-capture-component_receiver-street"
+                >
+              </div>
+              <div class="ui-g-12 ui-md-6 ui-xl-3">
+                <input pInputText
+                       id="shipment-capture-component_receiver-street_number"
+                       formControlName="receiverStreetNo"
+                >
+              </div>
+
+              <div class="ui-g-12 ui-md-12 ui-xl-3">
+                <label>{{'SHIPMENT-RESOURCE_RECEIVER-ZIPCODE-CITY' | translate}}</label>
+              </div>
+              <div class="ui-g-12 ui-md-6 ui-xl-3">
+                <input pInputText
+                       formControlName="receiverZipCode"
+                       id="shipment-capture-component_receiver-zipcode"
+                >
+              </div>
+              <div class="ui-g-12 ui-md-6 ui-xl-6">
+                <input pInputText
+                       formControlName="receiverCity"
+                       id="shipment-capture-component_receiver-city"
+                >
+              </div>
+            </div>
+          </div>
+          <div class="ui-g ui-fluid">
+            <div class="ui-g">
+              <div class="ui-g-12 ui-md-2">
+                <h4><label>{{'SHIPMENT-RESOURCE_NUMBER-OF_PACKETS' | translate}}</label></h4>
+              </div>
+              <div class="ui-g-12 ui-md-2" style="padding-top: 1.7em;">
+                <input pInputText
+                       formControlName="numberPackages"
+                       id="shipment-capture-component_cargo_amount-packages"
+                >
+              </div>
+              <div class="ui-g-12 ui-md-2">
+                <h4><label>{{'SHIPMENT-RESOURCE_TOTAL-WEIGHT' | translate}}</label></h4>
+              </div>
+              <div class="ui-g-12 ui-md-2" style="padding-top: 1.7em;">
+                <input pInputText
+                       formControlName=totalWeight
+                       id="shipment-capture-component_cargo_weight"
+                >
+              </div>
+              <div class="ui-g-12 ui-md-2">
+                <h4><label>{{'SHIPMENT-RESOURCE_TOTAL-VOLUME' | translate}}</label></h4>
+              </div>
+              <div class="ui-g-12 ui-md-2" style="padding-top: 1.7em;">
+                <input pInputText
+                       formControlName="totalCapacity"
+                       id="shipment-capture-component_cargo_volume"
+                >
+              </div>
+            </div>
+            <div class="ui-g-12 ui-md-10" style="margin-top: -1em;">
+              <h4><label>{{'TASK-RESOURCE_DESCRIPTION' | translate}}</label></h4>
+              <textarea pInputTextarea
+                        rows="3"
+                        cols="45"
+                        formControlName="cargoDescription"
+                        id="shipment-capture-component_cargo_description"></textarea>
+
+            </div>
+            <div class="ui-g-12 ui-md-2">
+              <h4><label>{{'SHIPMENT-RESOURCE_DANGEROUS-GOODS' | translate}}</label></h4>
+              <p-checkbox
+                formControlName="dangerousGoods"
+                binary="true"
+                id="shipment-capture-component_cargo_dangerous-goods"
+              >
+              </p-checkbox>
+            </div>
+          </div>
+          <div class="ui-g fluid ui-g-nopad">
+            <div class="ui-g-12" style="margin-top: -1em; margin-bottom: -1em;">
+              <h4><label>{{'SHIPMENT_CAPTURE_COMPONENT_SERVICES' | translate}}</label></h4>
+            </div>
+            <div class="ui-g-12 ui-lg-4 shipment-capture-component_services">
+              <p-panel header="Export">
+                <p-checkbox
+                  formControlName="preCarriage"
+                  binary="true"
+                  id="shipment-capture-component_services_pre-carriage"
+                >
+                </p-checkbox>
+                <label>{{'SHIPMENT-RESOURCE_PRE-CARRIAGE' | translate}}</label>
+                <br/>
+                <p-checkbox
+                  binary="true"
+                  formControlName="exportInsurance"
+                  id="shipment-capture-component_services_export-insurance"
+                >
+                </p-checkbox>
+                <label>{{'SHIPMENT-RESOURCE_EXPORT-INSURANCE' | translate}}</label>
+                <br/>
+                <p-checkbox
+                  formControlName="exportCustomsClearance"
+                  binary="true"
+                  id="shipment-capture-component_services_export-clearance"
+                >
+                </p-checkbox>
+                <label>{{'SHIPMENT-RESOURCE_EXPORT-CUSTOMS' | translate}}</label>
+                <br/>
+              </p-panel>
+            </div>
+            <div class="ui-g-12 ui-lg-4 shipment-capture-component_services">
+              <p-panel header="Flight">
+                <p-checkbox
+                  formControlName="flight"
+                  binary="true"
+                  id="shipment-capture-component_services_flight"
+                >
+                </p-checkbox>
+                <label>{{'SHIPMENT-RESOURCE_FLIGHT' | translate}}</label>
+              </p-panel>
+            </div>
+            <div class="ui-g-12 ui-lg-4 shipment-capture-component_services">
+              <p-panel header="Import">
+                <p-checkbox
+                  formControlName="onCarriage"
+                  binary="true"
+                  id="shipment-capture-component_services_on-carriage"
+                >
+                </p-checkbox>
+                <label>{{'SHIPMENT-RESOURCE_ON-CARRIAGE' | translate}}</label>
+                <br/>
+                <p-checkbox
+                  formControlName="importInsurance"
+                  binary="true"
+                  id="shipment-capture-component_services_import-insurance"
+                >
+                </p-checkbox>
+                <label>{{'SHIPMENT-RESOURCE_IMPORT-INSURANCE' | translate}} </label>
+                <br/>
+                <p-checkbox
+                  formControlName="importCustomsClearance"
+                  binary="true"
+                  id="shipment-capture-component_services_import-clearance"
+                >
+                </p-checkbox>
+                <label>{{'SHIPMENT-RESOURCE_IMPORT-CUSTOMS' | translate}} </label>
+                <br/>
+              </p-panel>
+            </div>
+          </div>
+        </form>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Flight">
+      <div *ngIf="selectedTask == 'organizeFlight'">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="selectedTask != 'organizeFlight'">
+        <div>
+          <form class="main-div ui-g" [formGroup]="displayFlightForm">
+            <div class="ui-g">
+              <div class="top-div ui-g ui-fluid">
+                <div class="ui-g-12 ui-md-1" style="margin-top: -1em; margin-right: 1em;">
+                  <h4><label>{{'FLIGHT-NUMBER' | translate}}</label></h4>
+                </div>
+                <div class="ui-g-12 ui-md-3">
+                  <input
+                    pInputText
+                    formControlName="flightNumber"
+                    type="text"
+                  >
+                </div>
+                <div class="ui-g-12 ui-md-2" style="margin-top: -1em; margin-right: 1em;">
+                  <h4><label>{{'FLIGHT-AIRLINE' | translate}}</label></h4>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                  <input pInputText
+                         formControlName="airline"
+                         type="text"
+                  >
+                </div>
+                <div class="ui-g-12 ui-md-1" style="margin-top: -1em; margin-right: 1em;">
+                  <h4><label>{{'FLIGHT-PRICE' | translate}}</label></h4>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                  <input
+                    pInputText
+                    formControlName="price"
+                    type="text"
+                  >
+                </div>
+              </div>
+              <!-- Center Bottom -->
+              <div class="bottom-div ui-g">
+                <div class="ui-g-12 ui-md-5">
+                  <div class="ui-g-12">
+                    <label class="start-label">{{'FLIGHT-DEPARTURE' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label>{{'FLIGHT-AIRPORT' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-9">
+                    <input
+                      pInputText
+                      formControlName="departureAirport"
+                      type="text"
+                    >
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label>{{'DATE' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-9">
+                    <input
+                      pInputText
+                      formControlName="destinationDate"
+                      type="text"
+                    >
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label>{{'TIME' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-9">
+                    <input
+                      pInputText
+                      formControlName="destinationTime"
+                      type="text"
+                    >
+                  </div>
+
+
+                </div>
+                <!-- Middle part Plane icon -->
+                <div class="plane-class ui-g-12 ui-md-1">
+                  <span class="plane-icon-span"><i class="fa fa-plane fa-4x"></i></span>
+                </div>
+                <!-- Rightside Finish area -->
+                <div class=" right-side ui-g-12 ui-md-5">
+                  <div class="ui-g-12">
+                    <label class="finish">{{'FLIGHT-DESTINATION' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label>{{'FLIGHT-AIRPORT' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-9">
+                    <input
+                      pInputText
+                      formControlName="destinationAirport"
+                      type="text"
+                    >
+                  </div>
+
+
+                  <div class="ui-g-12 ui-md-3">
+                    <label>{{'DATE' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-9">
+                    <input
+                      pInputText
+                      formControlName="destinationDate"
+                      type="text"
+                    >
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label>{{'TIME' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-9">
+                    <input
+                      pInputText
+                      formControlName="destinationTime"
+                      type="text"
+                    >
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="isOrganizeFlightCompleted == false">
+          There is no flight to display
+        </div>
+      </div>
+    </p-tabPanel>
+
+    <p-tabPanel header="Invoice">
+      <div *ngIf="selectedTask == 'createInvoice'">
+        <router-outlet></router-outlet>
+      </div>
+      <div *ngIf="selectedTask != 'createInvoice'">
+        <div>
+          <form [formGroup]="displayInvoiceForm">
+            <div class="ui-g">
+              <div class="ui-g-12">
+                <div class="ui-g" style="border-bottom: solid; border-color: lightgray;">
+                  <div class="ui-g-12 ui-md-2">
+                    <label>{{'INVOICE-CREATION-DATE' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-4">
+                    <input
+                      pInputText
+                      formControlName="invoiceCreationDate"
+                      type="text"
+                    >
+                  </div>
+                </div>
+                <!-- EXPORT -->
+                <div class="ui-g" style="border-bottom: solid; border-color: lightgray;">
+                  <div class="ui-g-12 ui-md-2">
+                    <label>{{'EXPORT-INSURANCE' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-4">
+                    <input
+                      pInputText
+                      formControlName="exportInsurance"
+                      type="text"
+                    />
+                  </div>
+                  <div class="ui-g-12 ui-md-2">
+                    <label>{{'EXPORT-CUSTOMS-CLEARANCE' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-4">
+                    <input
+                      pInputText
+                      formControlName="exportCustomsClearance"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="ui-g" style="border-bottom: solid; border-color: lightgray;">
+                  <div class="ui-g-12 ui-md-2">
+                    <label>{{'IMPORT-INSURANCE' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-4">
+                    <input
+                      pInputText
+                      formControlName="importInsurance"
+                      type="text"
+                    />
+                  </div>
+                  <div class="ui-g-12 ui-md-2">
+                    <label>{{'IMPORT-CUSTOMS-CLEARANCE' | translate}}</label>
+                  </div>
+                  <div class="ui-g-12 ui-md-4">
+                    <input
+                      pInputText
+                      formControlName="importCustomsClearance"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                  <label>{{'PRE-CARRIGE' | translate}}</label>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                  <input
+                    pInputText
+                    formControlName="preCarriage"
+                    type="text"
+                  />
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                  <label>{{'FLIGHT-PRICE' | translate}}</label>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                  <input
+                    pInputText
+                    formControlName="flightPrice"
+                    type="text"
+                  />
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                  <label>{{'ON-CARRIGE' | translate}}</label>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                  <input
+                    pInputText
+                    formControlName="onCarriage"
+                    type="text"
+                  />
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                  <label>{{'MANAGEMENT-FEE' | translate}}</label>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                  <input
+                    pInputText
+                    formControlName="managementFee"
+                    type="text"
+                  />
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                  <label>{{'SERVICE-FEE' | translate}}</label>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                  <input
+                    pInputText
+                    formControlName="serviceFee"
+                    type="text"
+                  />
+                </div>
+                <div class="ui-g-12 ui-md-2">
+                  <label>{{'DISCOUNT' | translate}}</label>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                  <input
+                    pInputText
+                    formControlName="discount"
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</div>

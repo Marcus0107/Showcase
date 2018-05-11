@@ -8,6 +8,8 @@ import {TaskListEffect} from "./effects/task-list.effect";
 import {EnabledTaskListEffect} from "./effects/enabled-task-list.effect";
 import {CompletedTaskListEffect} from "./effects/completed-task-list.effect";
 import {CommonEffect} from "./effects/common.effect";
+import {InvoiceEffects} from "./effects/invoice.effect";
+import {CaseUiCenterAreaEffect} from "./effects/case-ui-center-area.effect";
 
 @NgModule({
   imports: [
@@ -16,7 +18,9 @@ import {CommonEffect} from "./effects/common.effect";
       TaskListEffect,
       EnabledTaskListEffect,
       CompletedTaskListEffect,
-      CommonEffect
+      CommonEffect,
+      InvoiceEffects,
+      CaseUiCenterAreaEffect
     ]),
     SharedModule,
   ],

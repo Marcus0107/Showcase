@@ -17,7 +17,7 @@ export class LoadShipmentSuccessfullAction implements Action {
 export class ResetShipmentCaptureSliceAction implements Action {
   type = RESET_SHIPMENT_CAPTURE_SLICE;
 
-  constructor(public payload: any) {
+  constructor() {
 
   }
 }

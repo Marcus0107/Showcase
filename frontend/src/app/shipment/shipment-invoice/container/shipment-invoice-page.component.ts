@@ -8,7 +8,6 @@ import {State} from "../../../app.reducers";
 import {ActivatedRoute, Router} from "@angular/router";
 import {InvoiceResource} from "../../shipment-common/api/resources/invoice.resource";
 import {CreateInvoiceAction} from "../../shipment-common/store/shipments/invoice-page/invoice-page.actions";
-import {ReloadStoreAction} from "../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.actions";
 
 @Component({
   selector: "educama-shipment-invoice-page",
@@ -33,7 +32,6 @@ export class ShipmentInvoicePageComponent implements OnDestroy {
       .subscribe(invoiceListSlice => this.invoiceListSlice);
   }
 
-
   public ngOnDestroy() {
     this.invoiceListSliceSubscription.unsubscribe();
   }
@@ -46,11 +44,9 @@ export class ShipmentInvoicePageComponent implements OnDestroy {
     const trackingId = invoiceResource.trackingId;
     this._store.dispatch(new CreateInvoiceAction(trackingId, invoiceResource));
     this._router.navigate(["caseui/" + trackingId]);
-    this._store.dispatch(new ReloadStoreAction(trackingId));
   }
 
   public onCancelInvoiceEvent(trackingId: string) {
     this._router.navigate(["caseui/" + trackingId]);
-    this._store.dispatch(new ReloadStoreAction(trackingId));
   }
 }

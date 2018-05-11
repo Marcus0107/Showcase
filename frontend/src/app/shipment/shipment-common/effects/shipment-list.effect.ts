@@ -5,9 +5,8 @@ import {Store} from "@ngrx/store";
 import {State} from "../../../app.reducers";
 import * as actions from "../store/shipments/shipment-list-page/shipment-list-page.actions";
 import * as organizeFlightactions from "../store/shipments/organize-flight-page/organize-flight-page.actions";
-import * as invoiceActions from "../store/shipments/invoice-page/invoice-page.actions";
 import {
-  RequestShipmentsFailedAction, RequestShipmentsSuccessfulAction
+  RequestShipmentsFailedAction, RequestShipmentsSuccessfulAction, RequestSingleShipment
 } from "../store/shipments/shipment-list-page/shipment-list-page.actions";
 import {Observable} from "rxjs/Observable";
 import {LoadShipmentSuccessfullAction} from "../store/shipments/shipment-capture-page/shipment-capture-page.actions";
@@ -15,6 +14,12 @@ import {RequestTasksForShipmentAction} from "../store/tasks/task-list-page.actio
 import {SaveFlightSuccessfultAction} from "../store/shipments/organize-flight-page/organize-flight-page.actions";
 import {RequestCompletedTaskForShipmentAction} from "../store/completed-tasks/completed-task-list-page.actions";
 import {CreateInvoiceSuccessfulAction} from "../store/shipments/invoice-page/invoice-page.actions";
+
+
+import * as invoiceActions from "../store/shipments/invoice-page/invoice-page.actions";
+import {ReloadShipmentAndTasksForCaseUiACtion} from "../store/shipments/case-ui-center-area-page/case-ui-center-area-page.actions";
+import {RequestEnabledTasksForShipmentAction} from "../store/enbaled-tasks/enabled-task-list-page.actions";
+
 
 @Injectable()
 export class ShipmentListEffect {
@@ -49,13 +54,16 @@ export class ShipmentListEffect {
     .switchMap((action: organizeFlightactions.SaveFlightAction) => {
       return this._shipmentService.addFlightToShipment(action.trackingId, action.payload);
     })
-    .map(taskListSlice => new SaveFlightSuccessfultAction(taskListSlice.shipmentFlight, taskListSlice.trackingId));
+    .mergeMap(taskListSlice => [
+      new SaveFlightSuccessfultAction(taskListSlice.shipmentFlight, taskListSlice.trackingId),
+      new ReloadShipmentAndTasksForCaseUiACtion(taskListSlice.trackingId),
+      new RequestCompletedTaskForShipmentAction(taskListSlice.trackingId),
+      new RequestSingleShipment(taskListSlice.trackingId),
+      new RequestTasksForShipmentAction(taskListSlice.trackingId),
+      new RequestEnabledTasksForShipmentAction(taskListSlice.trackingId)
+    ]);
 
-  @Effect()
-  createInvoice = this._actions
-    .ofType(invoiceActions.CREATE_INVOICE_ACTION)
-    .switchMap((action: invoiceActions.CreateInvoiceAction) => {
-      return this._shipmentService.createInvoice(action.trackingID, action.payload);
-    })
-    .map(invoice => new CreateInvoiceSuccessfulAction(invoice));
+
+
+
 }

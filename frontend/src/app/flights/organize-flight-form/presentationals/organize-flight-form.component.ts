@@ -16,6 +16,7 @@ import {
 import {SaveFlightAction} from "../../../shipment/shipment-common/store/shipments/organize-flight-page/organize-flight-page.actions";
 import {OrganizeFlightResource} from "../../../shipment/shipment-common/api/resources/organize-flight.resource";
 import {OrganizeFlightSlice} from "../../../shipment/shipment-common/store/shipments/organize-flight-page/organize-flight-page.slice";
+import {ReloadShipmentAndTasksForCaseUiACtion} from "../../../shipment/shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.actions";
 
 @Component({
   selector: "educama-organize-flight-form",
@@ -46,8 +47,6 @@ export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
   public shipmentDetailSlice: Observable<OrganizeFlightSlice>;
   public shipmentDetailSliceSubscription: Subscription;
 
-  public selectedTask: string;
-
   // model for the page
   public shipmentDetailInfoModel: OrganizeFlightFormPageModel = new OrganizeFlightFormPageModel();
 
@@ -55,7 +54,7 @@ export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
               private _activatedRoute: ActivatedRoute,
               private _store: Store<State>,
               private _airlineService: AirlineService,
-              private _airportService: AirportService,) {
+              private _airportService: AirportService) {
 
     this.shipmentDetailSlice = this._store.select(state => state.organizeFlightPageSlice);
 
@@ -69,27 +68,57 @@ export class OrganizeFlightFormComponent implements OnInit, OnDestroy {
       this.trackingId = params["id"];
       this._store.dispatch(new RequestSingleShipment(params["id"]));
     });
-
-    this.selectedTask = this._router.url.split("/")[3];
-
   }
 
   public ngOnDestroy() {
-    this._store.dispatch(new ResetShipmentCaptureSliceAction(""));
+    this._store.dispatch(new ResetShipmentCaptureSliceAction());
     this.shipmentDetailSliceSubscription.unsubscribe();
   }
 
+  public saveFlight() {
+    this._store.dispatch(new SaveFlightAction(this.trackingId, new OrganizeFlightResource(
+      this.flightNumber, this.selectedAirline.name, this.price,
+      this.departureAirport, this.departureDate,
+      this.destinationAirport, this.destinationDate
+    )));
+
+    this._router.navigate(["caseui/" + this.trackingId]);
+    this._store.dispatch(new ReloadStoreAction(this.trackingId));
+    this._store.dispatch(new ReloadShipmentAndTasksForCaseUiACtion(this.trackingId));
+  }
+
+  public cancleFlight() {
+    this._store.dispatch(new ReloadStoreAction(this.trackingId));
+    this._router.navigate(["caseui/" + this.trackingId]);
+  }
 
   // ***************************************************
   // Event Handler
   // ***************************************************
-
-  // TODO: Remove if no evend is used, otherwise rename
   public loadAirlineSuggestions(event: any) {
     this._airlineService.findAirlineSuggestions(event.query)
       .subscribe(customerSuggestionResource => this.airlineSuggestion = customerSuggestionResource);
   }
 
+  public loadAirportSuggestions(event: any) {
+    this._airportService.findAirportSuggestions(event.query)
+      .subscribe(customerSuggestionResource => this.airportSuggestion = customerSuggestionResource);
+  }
+
+  public onAirlineSelected(airline: AirlineResource) {
+
+    this.selectedAirline = airline;
+  }
+
+  public onStartAirportSelected(airport: AirportResource) {
+    this.departureAirport = airport.iataCode;
+    this.selectedStartAirport = airport;
+  }
+
+  public onDestinationAirportSelected(airport: AirportResource) {
+    this.destinationAirport = airport.iataCode;
+    this.selectedDestinationAirport = airport;
+  }
 
   // ***************************************************
   // Data Retrieval

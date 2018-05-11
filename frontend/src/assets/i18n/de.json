@@ -114,5 +114,8 @@
   "INVOICE-NUMBER": "Rechnungs-Nummer",
   "CREATE-INVOICE": "Rechnungserstellung",
   "INVOICE-SUM": "Gesamtsumme",
-  "FLIGHT-PRICE": "Flugpreis"
+  "FLIGHT-PRICE": "Flugpreis",
+  "CURRENCY": "EUR",
+  "INVOICE-NUMBER": "Rechnungsnummer",
+  "INVOICE-SUM": "Endsumme"
 }

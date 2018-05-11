@@ -8,6 +8,7 @@ import {ShipmentListResource} from "./resources/shipment-list.resource";
 import {ShipmentResource} from "./resources/shipment.resource";
 import {OrganizeFlightResource} from "./resources/organize-flight.resource";
 import {InvoiceResource} from "./resources/invoice.resource";
+import {InvoiceListResource} from "./resources/invoice-ist.resource";
 
 /*
  * Service to communicate with Shipments Resource
@@ -67,11 +68,20 @@ export class ShipmentService {
   }
 
   /*
-  *  Add flight to existing shipment
-  *  @param trackingId of shipment and shipmentFlight to add
-  *  @return Observable of updated shipment
+  *  Creates a invoice for a specific shipment
+  *  @param trackingId of shipment and invoice to be created
+  *  @return Observable of the created invoice
   */
   public createInvoice(trackingId: string, invoice: InvoiceResource): Observable<InvoiceResource> {
     return this._restClientService.post(this.SHIPMENT_RESOURCE_PATH + "/invoice/" + trackingId, JSON.stringify(invoice));
+  }
+
+  /*
+  *  Get all invoices for a specfic shipment
+  *  @param trackingId of shipment of the invoices
+  *  @return Observable of all invoices
+  */
+  public getInvoice(trackingId: string): Observable<InvoiceResource> {
+    return this._restClientService.get(this.SHIPMENT_RESOURCE_PATH + "/invoice/" + trackingId);
   }
 }

@@ -9,6 +9,7 @@ import {ShipmentCaptureSlice} from "../../../shipment-common/store/shipments/shi
 import {RequestSingleShipment} from "../../../shipment-common/store/shipments/shipment-list-page/shipment-list-page.actions";
 import {ResetShipmentCaptureSliceAction
 } from "../../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.actions";
+import {ClearCaseUiCenterAreaSlice} from "../../../shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.actions";
 
 
 @Component({
@@ -53,7 +54,7 @@ export class CaseUIShipmentDetailPageComponent implements OnInit, OnDestroy, OnC
   }
 
   public ngOnDestroy() {
-    this._store.dispatch(new ResetShipmentCaptureSliceAction(""));
+    this._store.dispatch(new ResetShipmentCaptureSliceAction());
     this.shipmentDetailSliceSubscription.unsubscribe();
   }
 

@@ -15,8 +15,9 @@ import {
   ResetShipmentCaptureSliceAction,
   ReloadStoreAction
 } from "../../shipment-common/store/shipments/shipment-capture-page/shipment-capture-page.actions";
-import {OrganizeFlightResource} from "../../shipment-common/api/resources/organize-flight.resource";
 import {CompleteTaskEvent} from "../presentationals/events/complete-task.event";
+import {isUndefined} from "util";
+import {ReloadShipmentAndTasksForCaseUiACtion} from "../../shipment-common/store/shipments/case-ui-center-area-page/case-ui-center-area-page.actions";
 
 @Component({
   selector: "educama-shipment-capture-page",
@@ -53,7 +54,7 @@ export class ShipmentCapturePageComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this._store.dispatch(new ResetShipmentCaptureSliceAction(""));
+    this._store.dispatch(new ResetShipmentCaptureSliceAction());
     this.shipmentCaptureSliceSubscription.unsubscribe();
   }
 
@@ -65,7 +66,7 @@ export class ShipmentCapturePageComponent implements OnInit, OnDestroy {
    * Handles the save event for a shipment
    */
   public onSaveShipmentEvent(saveShipmentEvent: SaveShipmentEvent) {
-    if (_.isUndefined(this.shipmentCaptureModel.shipment)) {
+    if (isUndefined(saveShipmentEvent.trackingId)) {
       this._shipmentService.createShipment(this.mapShipmentFromSaveShipmentEvent(saveShipmentEvent))
         .subscribe((shipment) => {
           this._router.navigate(["/caseui/" + shipment.trackingId]);
@@ -77,6 +78,7 @@ export class ShipmentCapturePageComponent implements OnInit, OnDestroy {
           .subscribe(shipment => {
             const trackingId = shipment.trackingId;
             this._store.dispatch(new ReloadStoreAction(trackingId));
+            this._store.dispatch(new ReloadShipmentAndTasksForCaseUiACtion(trackingId));
             this._router.navigate(["/caseui/" + trackingId]);
           });
       });

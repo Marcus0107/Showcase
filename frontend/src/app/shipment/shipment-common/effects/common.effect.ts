@@ -22,51 +22,11 @@ export class CommonEffect {
   @Effect()
   reloadShipment = this._actions
     .ofType("RELOAD_STORE_ACTION")
-    .map((action: shipmentCaptureActions.ReloadStoreAction) =>
-      new RequestSingleShipment(action.trackingId)
-    );
-
-  @Effect()
-  reloadActiveTasks = this._actions
-    .ofType("RELOAD_STORE_ACTION")
-    .map((action: shipmentCaptureActions.ReloadStoreAction) =>
-      new RequestTasksForShipmentAction(action.trackingId));
-
-  @Effect()
-  reloadEnabledTasks = this._actions
-    .ofType("RELOAD_STORE_ACTION")
-    .map((action: shipmentCaptureActions.ReloadStoreAction) =>
-      new RequestEnabledTasksForShipmentAction(action.trackingId));
-
-  @Effect()
-  reloadCompletedTasks = this._actions
-    .ofType("RELOAD_STORE_ACTION")
-    .map((action: shipmentCaptureActions.ReloadStoreAction) =>
-      new RequestCompletedTaskForShipmentAction(action.trackingId));
-
-
-  @Effect()
-  reloadCompletedTaskForOrganizeFlight = this._actions
-    .ofType("SAVE_FLIGHT_SUCCESSFUL_ACTION")
-    .map((action: organizeFlightactions.SaveFlightSuccessfultAction) =>
-      new RequestCompletedTaskForShipmentAction(action.trackingId));
-
-  @Effect()
-  reloadShipmentForOrganizeFlight = this._actions
-    .ofType("SAVE_FLIGHT_SUCCESSFUL_ACTION")
-    .map((action: organizeFlightactions.SaveFlightSuccessfultAction) =>
-      new RequestSingleShipment(action.trackingId));
-
-  @Effect()
-  reloadActiveTasksForOrganizeFlight = this._actions
-    .ofType("SAVE_FLIGHT_SUCCESSFUL_ACTION")
-    .map((action: organizeFlightactions.SaveFlightSuccessfultAction) =>
-      new RequestTasksForShipmentAction(action.trackingId));
-
-  @Effect()
-  reloadEnabledTasksTasksForOrganizeFlight = this._actions
-    .ofType("SAVE_FLIGHT_SUCCESSFUL_ACTION")
-    .map((action: organizeFlightactions.SaveFlightSuccessfultAction) =>
-      new RequestEnabledTasksForShipmentAction(action.trackingId));
+    .mergeMap((action: shipmentCaptureActions.ReloadStoreAction) => [
+      new RequestSingleShipment(action.trackingId),
+      new RequestTasksForShipmentAction(action.trackingId),
+      new RequestEnabledTasksForShipmentAction(action.trackingId),
+      new RequestCompletedTaskForShipmentAction(action.trackingId)
+    ]);
 
 }

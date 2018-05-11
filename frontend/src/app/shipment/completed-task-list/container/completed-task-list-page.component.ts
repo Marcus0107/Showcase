@@ -31,11 +31,12 @@ export class CompletedTaskListPageComponent implements OnInit, OnDestroy {
 
     this.completedTaskListSliceSubscription = this.completedTaskListSlice
       .subscribe(completedTaskListSlice => this.updateCompletedTaskListModel(completedTaskListSlice));
+
   }
 
   public ngOnInit() {
-    this._activatedRoute.params.subscribe(params => {
-      this._store.dispatch(new RequestCompletedTaskForShipmentAction(params["id"]));
+    this._activatedRoute.url.subscribe(url => {
+      return this._store.dispatch(new RequestCompletedTaskForShipmentAction(url[1].toString()));
     });
   }
 

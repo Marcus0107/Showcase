@@ -6,7 +6,6 @@ import {CaseUiCenterAreaPageComponent} from "./container/case-ui-center-area-pag
 import {OrganizeFlightFormModule} from "../../../flights/organize-flight-form/organize-flight-form.module";
 import {ShipmentCaptureModule} from "../../shipment-capture/shipment-capture.module";
 import {TaskListModule} from "../../task-list/task-list.module";
-import {ShipmentCapturePageComponent} from "../../shipment-capture/container/shipment-capture-page.component";
 
 @NgModule({
   imports: [
