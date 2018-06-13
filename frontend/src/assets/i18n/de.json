@@ -50,7 +50,6 @@
   "INVOICE-MANAGEMENT-FEE": "Managementgebühr",
   "INVOICE-NUMBER": "Rechnungs-Nummer",
   "INVOICE-SERVICE-FEE": "Bearbeitungsgebühr",
-  "INVOICE-SUM": "Gesamtsumme",
   "NAVIGATION-BAR-COMPONENT_MENU-ITEM_AIRLINES-LIST": "Fluggesellschaften",
   "NAVIGATION-BAR-COMPONENT_MENU-ITEM_AIRPORTS-LIST" : "Flughäfen",
   "NAVIGATION-BAR-COMPONENT_MENU-ITEM_CUSTOMER-LIST": "Kunden",
@@ -101,7 +100,6 @@
   "ENABLED-TASK-LIST-TITLE": "Aktivierbare Aufgaben",
   "SHIPMENT-DETAILS": "Transportinformationen",
   "ACTIVATE-TASK":"Aktivieren",
-  "INVOICE-CREATION-DATE": "Rechnungs-Datum",
   "PRE-CARRIGE": "Vorlauf",
   "EXPORT-INSURANCE": "Exportversicherung",
   "EXPORT-CUSTOMS-CLEARANCE": "Ausfuhr Zollabfertigung",
@@ -111,11 +109,12 @@
   "MANAGEMENT-FEE": "Managementgebühr",
   "SERVICE-FEE": "Bearbeitungsgebühr",
   "DISCOUNT": "Rabatt",
-  "INVOICE-NUMBER": "Rechnungs-Nummer",
   "CREATE-INVOICE": "Rechnungserstellung",
-  "INVOICE-SUM": "Gesamtsumme",
-  "FLIGHT-PRICE": "Flugpreis",
   "CURRENCY": "EUR",
-  "INVOICE-NUMBER": "Rechnungsnummer",
-  "INVOICE-SUM": "Endsumme"
+  "INVOICE-SUM": "Endsumme",
+  "SHIPMENT_STATUS":"Status",
+  "SHIPMENT_ORDER_INCOMPLETE" : "Shipment order incomplete",
+  "SHIPMENT_ORDER_COMPLETED" : "Shipment order completed",
+  "FLIGHT_DEPARTED" : "Flight departed",
+  "SHIPMENT_COMPLETED" : "Shipment completed"
 }
