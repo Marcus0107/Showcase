@@ -1,31 +1,58 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Component, Input, Output, EventEmitter, OnInit, OnChanges} from "@angular/core";
 import {ShipmentResource} from "../../shipment-common/api/resources/shipment.resource";
 import {TranslateService} from "ng2-translate";
+import {SelectItem} from "primeng/primeng";
+import {current} from "codelyzer/util/syntaxKind";
+import {isUndefined} from "util";
+
+interface City {
+  name: string;
+  code: string;
+}
 
 @Component({
-    selector: "educama-shipment-list",
-    templateUrl: "./shipment-list.component.html"
+  selector: "educama-shipment-list",
+  templateUrl: "./shipment-list.component.html"
 })
-export class ShipmentListComponent {
+export class ShipmentListComponent implements OnChanges {
 
-    @Input()
-    public shipmentList: ShipmentResource[];
+  @Input()
+  public shipmentList: ShipmentResource[];
 
-    @Output()
-    public selectedShipment: ShipmentResource = new ShipmentResource();
+  @Output()
+  public selectedShipment: ShipmentResource = new ShipmentResource();
 
-    @Output()
-    public shipmentSelectedEvent: EventEmitter<ShipmentResource> = new EventEmitter();
+  @Output()
+  public shipmentSelectedEvent: EventEmitter<ShipmentResource> = new EventEmitter();
 
-    public emptyListMessage: string;
+  public emptyListMessage: string;
 
-    constructor(_translateService: TranslateService) {
-        _translateService.get("GENERIC_NO-RECORDS-FOUND")
-            .subscribe(value => this.emptyListMessage = value);
-    }
+  statuses: SelectItem[] = [];
 
-    public onRowSelect(event: Event) {
-      this.shipmentSelectedEvent.emit(this.selectedShipment);
-    }
+
+  constructor(public _translateService: TranslateService) {
+    _translateService.get("GENERIC_NO-RECORDS-FOUND")
+      .subscribe(value => this.emptyListMessage = value);
+  }
+
+
+  public ngOnChanges() {
+    const selectItems: SelectItem[] = [];
+
+    this.shipmentList.map(shipment => {
+        if (!selectItems.find(val => val.value === shipment.status)) {
+          this._translateService.get(shipment.status)
+            .subscribe(value =>
+              selectItems.push(<SelectItem>{label: value, value: shipment.status})
+            );
+        }
+      }
+    );
+    this.statuses = selectItems;
+  }
+
+  onRowSelect(event: Event) {
+    this.shipmentSelectedEvent.emit(this.selectedShipment);
+  }
 
 }

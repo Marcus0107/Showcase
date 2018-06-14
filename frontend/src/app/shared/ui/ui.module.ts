@@ -14,7 +14,8 @@ import {
     MenubarModule,
     PanelModule,
     TabViewModule,
-    CalendarModule
+    CalendarModule,
+    MultiSelectModule
 } from "primeng/primeng";
 
 @NgModule({
@@ -33,7 +34,8 @@ import {
         MenubarModule,
         PanelModule,
         TabViewModule,
-        CalendarModule
+        CalendarModule,
+        MultiSelectModule
     ]
 })
 export class UIModule {
