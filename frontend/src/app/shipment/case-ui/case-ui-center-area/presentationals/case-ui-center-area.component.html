@@ -7,7 +7,7 @@
       <div *ngIf="selectedTask == 'completeShipment'">
         <router-outlet></router-outlet>
       </div>
-      <div *ngIf="selectedTask != 'changeShipment'">
+      <div *ngIf="selectedTask != 'changeShipment' && selectedTask != 'completeShipment'">
         <form name="form" [formGroup]="displayShipmentForm" class="shipment-capture-form">
           <div class="ui-g ui-fluid" style="">
 
